@@ -136,7 +136,7 @@ make_arima_boost_catboost <- function() {
         model = "boost_prophet",
         eng = "prophet_catboost",
         parsnip = "stop_iter",
-        original = "early_stop",
+        original = "early_stopping_rounds",
         func = list(pkg = "dials", fun = "stop_iter"),
         has_submodel = FALSE
     )
@@ -309,7 +309,7 @@ make_arima_boost_catboost <- function() {
         model = "boost_prophet",
         eng = "prophet_catboost",
         parsnip = "stop_iter",
-        original = "early_stop",
+        original = "early_stopping_rounds",
         func = list(pkg = "dials", fun = "stop_iter"),
         has_submodel = FALSE
     )
@@ -490,7 +490,7 @@ make_arima_boost_catboost <- function() {
         model = "boost_prophet",
         eng = "prophet_catboost",
         parsnip = "stop_iter",
-        original = "early_stop",
+        original = "early_stopping_rounds",
         func = list(pkg = "dials", fun = "stop_iter"),
         has_submodel = FALSE
     )
@@ -671,7 +671,7 @@ make_arima_boost_catboost <- function() {
         model = "boost_prophet",
         eng = "prophet_catboost",
         parsnip = "stop_iter",
-        original = "early_stop",
+        original = "early_stopping_rounds",
         func = list(pkg = "dials", fun = "stop_iter"),
         has_submodel = FALSE
     )
