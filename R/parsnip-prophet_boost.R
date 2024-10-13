@@ -260,7 +260,7 @@ boost_prophet <- function(mode = "regression", growth = NULL, changepoint_num = 
                           season = NULL, prior_scale_changepoints = NULL, prior_scale_seasonality = NULL,
                           prior_scale_holidays = NULL, logistic_cap = NULL, logistic_floor = NULL,
                           tree_depth = NULL, learn_rate = NULL, mtry = NULL, trees = NULL, min_n = NULL,
-                          sample_size = NULL, loss_reduction = NULL) {
+                          sample_size = NULL, loss_reduction = NULL, stop_iter = NULL) {
     
     args <- list(
         
@@ -285,7 +285,8 @@ boost_prophet <- function(mode = "regression", growth = NULL, changepoint_num = 
         trees                     = rlang::enquo(trees),
         min_n                     = rlang::enquo(min_n),
         loss_reduction            = rlang::enquo(loss_reduction),
-        sample_size               = rlang::enquo(sample_size)
+        sample_size               = rlang::enquo(sample_size),
+        stop_iter                 = rlang::enquo(stop_iter)
     )
     
     parsnip::new_model_spec(
@@ -320,7 +321,7 @@ update.boost_prophet <- function(object,
                                season = NULL, prior_scale_changepoints = NULL, prior_scale_seasonality = NULL,
                                prior_scale_holidays = NULL, logistic_cap = NULL, logistic_floor = NULL,
                                tree_depth = NULL, learn_rate = NULL, mtry = NULL, trees = NULL, min_n = NULL,
-                               sample_size = NULL, loss_reduction = NULL, fresh = FALSE, ...) {
+                               sample_size = NULL, loss_reduction = NULL, stop_iter = NULL, fresh = FALSE, ...) {
     
     args <- list(
         
@@ -345,7 +346,8 @@ update.boost_prophet <- function(object,
         trees                     = rlang::enquo(trees),
         min_n                     = rlang::enquo(min_n),
         loss_reduction            = rlang::enquo(loss_reduction),
-        sample_size               = rlang::enquo(sample_size)
+        sample_size               = rlang::enquo(sample_size),
+        stop_iter                 = rlang::enquo(stop_iter)
     )
     
     parsnip::update_spec(
@@ -416,7 +418,13 @@ prophet_catboost_fit_impl <- function(x, y,
                                           fit = TRUE,
                                           
                                           # catboost params
-                                          depth = 6, eta  = 0.3, rsm = 1, iterations = 1000, min_data_in_leaf = 1, subsample = 1,
+                                          depth = 6, 
+                                          eta  = 0.3, 
+                                          rsm = 1, 
+                                          iterations = 1000, 
+                                          min_data_in_leaf = 1, 
+                                          subsample = 1, 
+                                          early_stopping_rounds = NULL,
                                           ...) {
     
     args <- list(...)
@@ -527,6 +535,7 @@ prophet_catboost_fit_impl <- function(x, y,
         args[["subsample"]] <- if (subsample > 1) 1 else subsample
         args[["learning_rate"]] <- eta
         args[["depth"]] <- depth
+        args[["early_stopping_rounds"]] <- early_stopping_rounds
         
         if (!any(names(args) %in% "task_type")){
             args[["rsm"]] <- if (rsm > 1) 1 else rsm/ncol(x)
@@ -644,8 +653,15 @@ prophet_lightgbm_fit_impl <- function(x, y,
                                       fit = TRUE,
                                       
                                       # lightgbm params
-                                      max_depth = 17, learning_rate  = 0.1, num_iterations = 10, min_data_in_leaf = 20, 
-                                      min_gain_to_split = 0, bagging_fraction = 1, feature_fraction = 1, ...) {
+                                      max_depth = 17, 
+                                      learning_rate  = 0.1, 
+                                      num_iterations = 10, 
+                                      min_data_in_leaf = 20, 
+                                      min_gain_to_split = 0,
+                                      bagging_fraction = 1, 
+                                      feature_fraction = 1,
+                                      early_stopping_rounds = NULL,
+                                      ...) {
     
     others <- list(...)
     
@@ -779,7 +795,8 @@ prophet_lightgbm_fit_impl <- function(x, y,
             feature_fraction = feature_fraction,
             min_data_in_leaf = min_data_in_leaf,
             min_gain_to_split = min_gain_to_split,
-            bagging_fraction = bagging_fraction
+            bagging_fraction = bagging_fraction,
+            early_stopping_rounds = early_stopping_rounds
         )
         
         # override or add some other args
