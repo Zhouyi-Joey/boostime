@@ -183,6 +183,14 @@ make_prophet_boost_catboost <- function() {
         has_submodel = FALSE
     )
     
+    parsnip::set_model_arg(
+        model = "boost_prophet",
+        eng = "prophet_catboost",
+        parsnip = "stop_iter",
+        original = "early_stop",
+        func = list(pkg = "dials", fun = "stop_iter"),
+        has_submodel = FALSE
+    )
     # * Encoding ----
     parsnip::set_encoding(
         model   = "boost_prophet",
@@ -404,6 +412,15 @@ make_prophet_boost_catboost <- function() {
         parsnip = "sample_size",
         original = "bagging_fraction",
         func = list(pkg = "dials", fun = "sample_size"),
+        has_submodel = FALSE
+    )
+
+    parsnip::set_model_arg(
+        model = "boost_prophet",
+        eng = "prophet_catboost",
+        parsnip = "stop_iter",
+        original = "early_stop",
+        func = list(pkg = "dials", fun = "stop_iter"),
         has_submodel = FALSE
     )
     
