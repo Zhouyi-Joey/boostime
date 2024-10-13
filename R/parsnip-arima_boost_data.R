@@ -132,6 +132,14 @@ make_arima_boost_catboost <- function() {
         has_submodel = FALSE
     )
     
+    parsnip::set_model_arg(
+        model = "boost_prophet",
+        eng = "prophet_catboost",
+        parsnip = "stop_iter",
+        original = "early_stop",
+        func = list(pkg = "dials", fun = "stop_iter"),
+        has_submodel = FALSE
+    )
     # * Encoding ----
     parsnip::set_encoding(
         model   = "boost_arima",
@@ -297,6 +305,14 @@ make_arima_boost_catboost <- function() {
         has_submodel = FALSE
     )
     
+    parsnip::set_model_arg(
+        model = "boost_prophet",
+        eng = "prophet_catboost",
+        parsnip = "stop_iter",
+        original = "early_stop",
+        func = list(pkg = "dials", fun = "stop_iter"),
+        has_submodel = FALSE
+    )
     # * Encoding ----
     parsnip::set_encoding(
         model   = "boost_arima",
@@ -469,7 +485,15 @@ make_arima_boost_catboost <- function() {
         func = list(pkg = "dials", fun = "sample_size"),
         has_submodel = FALSE
     )
-    
+
+    parsnip::set_model_arg(
+        model = "boost_prophet",
+        eng = "prophet_catboost",
+        parsnip = "stop_iter",
+        original = "early_stop",
+        func = list(pkg = "dials", fun = "stop_iter"),
+        has_submodel = FALSE
+    )
     # * Encoding ----
     parsnip::set_encoding(
         model   = "boost_arima",
@@ -643,6 +667,14 @@ make_arima_boost_catboost <- function() {
         has_submodel = FALSE
     )
     
+    parsnip::set_model_arg(
+        model = "boost_prophet",
+        eng = "prophet_catboost",
+        parsnip = "stop_iter",
+        original = "early_stop",
+        func = list(pkg = "dials", fun = "stop_iter"),
+        has_submodel = FALSE
+    )
     # * Encoding ----
     parsnip::set_encoding(
         model   = "boost_arima",
